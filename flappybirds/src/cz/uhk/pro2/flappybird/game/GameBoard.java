@@ -14,8 +14,7 @@ public class GameBoard implements TickAware{
 	public GameBoard(){
 		//TODO jen testovaci data, nutno udelat nacitani dat ze souboru
 		tiles = new Tile[10][10];
-		tiles[2][1] =new WallTile();
-		bird = new Bird(100, 100);
+
 	}
 	
 	
