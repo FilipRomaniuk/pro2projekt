@@ -94,14 +94,14 @@ public class CsvBoardLoader implements BoardLoader {
 							t="";
 						}
 						if("B".equals(t)){
-				//			tiles[i][j] = ((BonusTile)tileTypes.get("B")).clone();
+						tiles[i][j] = ((BonusTile)tileTypes.get("B")).clone();
 							continue;
 						}
 						tiles[i][j]=tileTypes.get(t);
 						
 					}
 				}
-				GameBoard  gb = new GameBoard(tiles);
+				GameBoard  gb = new GameBoard(tiles,imageOfTheBird);
 				return gb;
 			} catch (UnsupportedEncodingException e) {
 				throw new RuntimeException("Chyba pri cteni souboru s levelem - spatna znakova sada",e);
