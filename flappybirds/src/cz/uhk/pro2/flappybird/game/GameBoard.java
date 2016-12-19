@@ -11,6 +11,7 @@ public class GameBoard implements TickAware{
 	int widthPix;//sirka hraci plochy
 	Bird bird; //herní pták
 	private boolean gameOver; //true pokud doslo ke kolizi a hra MA skoncit
+	private Player player;
 
 	Image imageOfTheBird;
 	
@@ -36,6 +37,10 @@ public class GameBoard implements TickAware{
 
 	public void kickTheBird(){
 		bird.kick();
+	}
+	
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 	
 	/**
@@ -73,23 +78,29 @@ public class GameBoard implements TickAware{
 						//t je zed
 						//otestujeme, zda t koliduje s ptakem
 						if(bird.collidesWithRectangle(viewportX, viewportY, Tile.SIZE, Tile.SIZE)){
+							if (!gameOver)
+								player.writeScore();
+							
 							gameOver = true; //toslo ke kolizi, hra ma skoncit
 						}
 					}
 					
 					if(t instanceof BonusTile){
 						if(bird.collidesWithRectangle(viewportX, viewportY, Tile.SIZE, Tile.SIZE)){
+							if (!gameOver && !((BonusTile) t).isEaten()) {
+								player.increaseScore(1000);
+							}
 							((BonusTile) t).setEaten(true);//ptak snedl bonus
 							//t.draw(g, viewportX,viewportY);
-							
 						}
 					}
+					
+
 					
 					if(t instanceof BonusTile && j == (countJ + minJ - 2)  ){//
 						((BonusTile)t).setEaten(false);
 						
-				//	}else if(t instanceof BonusTile && j== countJ){
-				//		( (BonusTile)t).setEaten(false);
+
 					}
 					
 				}
@@ -122,13 +133,16 @@ public class GameBoard implements TickAware{
 			
 			//TODO dáme vìdìt ptákovi, že hodiny tickly
 			bird.tick(ticksSinceStart);
+			player.increaseScore(1);
 		}//else pri game over hra stoji na miste
 		
 	}
 	 public void reset(){
 		 gameOver= false;
 		 
-		// bird = new Bird(100, 100,imageOfTheBird ); 
+		 if (player != null)
+			 player.setScore(0);
+
 		 bird = new Bird(100, 100,imageOfTheBird ); 
 		 
 		 

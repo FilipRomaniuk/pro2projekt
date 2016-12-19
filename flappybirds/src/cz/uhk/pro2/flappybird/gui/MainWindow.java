@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import javax.swing.*;
 
 import cz.uhk.pro2.flappybird.game.GameBoard;
+import cz.uhk.pro2.flappybird.game.Player;
 import cz.uhk.pro2.flappybird.game.service.BoardLoader;
 import cz.uhk.pro2.flappybird.game.service.CsvBoardLoader;
 import cz.uhk.pro2.flappybird.gui.MainWindow.BoardPanel;
@@ -65,6 +66,11 @@ public class MainWindow extends JFrame {
 			pnl.repaint();//refresh obrazovky
 		});
 		//t.start();
+		
+		// vytvorime dialog a ulozime jmeno hrace
+		String name = JOptionPane.showInputDialog(pnl,"What's your name?").toString();
+		Player player = new Player(name);
+		gameBoard.setPlayer(player);
 		
 		addMouseListener(new MouseAdapter() {
 			@Override
